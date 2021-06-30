@@ -1,8 +1,9 @@
 # Django App for Polotic course
 <hr>
-### Todo: 
 
-- [ ] Navbar
+### To-do: 
+
+- [] Navbar
 	- [ ] Logo
 	- [ ] Buttons login, register, cart
 	- [ ] Section:
