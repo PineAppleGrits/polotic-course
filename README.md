@@ -3,7 +3,7 @@
 
 ### To-do: 
 
-- [] Navbar
+- [ ] Navbar
 	- [ ] Logo
 	- [ ] Buttons login, register, cart
 	- [ ] Section:
