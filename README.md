@@ -1,6 +1,6 @@
 # Django App for Polotic course
-<hr>
-### Todo: 
+
+## To-do: 
 
 - [ ] Navbar
 	- [ ] Logo
@@ -17,12 +17,12 @@
 
 `On page changes only the body changes, Navbar and Footer stays.`
 
-#### Objective
+## Objective
 
 JAGUARETE KAA S.A. Wants to make a website to show off their products, taking adventage of the eCommerce system. 
 Also responsive website.
 
-#### DB modeling: 
+## DB modeling: 
 
 * Categories:
 	* Description
@@ -39,7 +39,7 @@ Also responsive website.
 	* List of products []
 	* Total price of the cart
 
-#### Groups
+## Groups
 
 * User: Can see the complete website except Add & Edit products page. Also can see the Cart page where its their cart information
 
