@@ -1,0 +1,39 @@
+{%extends 'jaguarete/base.html' %}
+
+{% block content %}
+<h3>Resultados de busqueda</h3>
+{% if all_items %}
+  <div class="container mt-5 mb-5">
+    <div class="d-flex row">
+        <div class="col-md-10">
+            {% for item in all_items %}
+                        <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="/media/{{item.image}}"></div>
+                <div class="col-md-6 mt-1">
+                    <h5>{{item.title}}</h5>
+                    <p class="text-justify text-truncate para mb-0">{{item.description}}<br><br></p>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">${{item.price}}</h4>
+                    </div>
+                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Ver producto</button>
+                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="button" disabled>
+                    Añadir al carrito
+                      <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
+    Ya añadido al carrito
+
+  </span>
+                    </button></div>
+                </div>
+            </div>
+            
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% else %}
+<h4 class="text-center text-danger">No se han encontrado elementos :(</h4>
+{% endif %}
+{% endblock %}

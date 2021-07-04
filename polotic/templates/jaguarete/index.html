@@ -1,0 +1,70 @@
+{%extends 'jaguarete/base.html' %}
+
+{% block content %}
+
+<h2 class="">Ultimos productos</h2>
+  <div class="row justify-content-center mx-auto"> 
+  {% for item in last_three %}
+  <div class="col-sm-3 card mx-auto mt-5">
+
+    <div class="align-items-center mx-auto p-5 bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+      <img src="/media/{{ item.image }}" class="mx-auto img-fluid" style="max-width: 10rem"/>
+      <a href="#!">
+        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+      </a>
+    </div>
+  
+    <div class="card-body">
+      <h5 class="card-title">{{ item.title }}</h5>
+      <p class="card-text"> {{item.description}}
+      </p>
+  
+      <button type="button" class="btn btn-primary">Ver producto</button>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  <h2>Productos</h2>
+  <div class="container mt-5 mb-5">
+    <div class="d-flex row">
+        <div class="col-md-10">
+            {% for item in all_items %}
+                                      <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="/media/{{item.image}}"></div>
+                <div class="col-md-6 mt-1">
+                    <h5>{{item.title}}</h5>
+                    <p class="text-justify text-truncate para mb-0">{{item.description}}<br><br></p>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">${{item.price}}</h4>
+                    </div>
+                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Ver producto</button>
+                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="button">
+                    Añadir al carrito
+                      {% if user.is_authenticated %}
+                      {% for item_in_cart in user_cart.products_list.all %}
+                        {% if item.title == item_in_cart.title %}
+                       <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
+                      Ya añadido al carrito
+                        <span class="visually-hidden">unread messages</span>
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                      {% else %}
+                      
+                      {% endif %}
+                    </button></div>
+                </div>
+            </div>
+            
+            {% endfor %}
+            //
+        </div>
+    </div>
+</div>
+
+{% for cart in all_carts %}
+{{cart.total_price}}
+{% endfor %}
+{% endblock %}
