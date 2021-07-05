@@ -22,6 +22,5 @@ urlpatterns = [
     path('registrarse/', include('usuarios.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('jaguarete.urls')),
-    path('category/<str:categoria>', include('jaguarete.urls')),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
        

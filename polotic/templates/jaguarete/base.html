@@ -49,7 +49,7 @@
                 {% if request.user|has_not_group:"Moderador" %}
                 <a class="nav-link" href="#">
                   <span class="badge badge-pill bg-danger">{{user_cart.products_list.all.count}}</span>
-                  <span><i class="fas fa-shopping-cart text-success"></i></span>
+                  <span><a href="/carrito/"><i class="fas fa-shopping-cart text-success"></i></a></span>
                 </a>  
                 {% endif %}
                 {% else %}
@@ -82,7 +82,7 @@
               <!-- Left links -->
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link active dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Categorias</a>
@@ -124,6 +124,12 @@
         </nav>
       </header>
   <div class="container-fluid container-dark">
+    {% for alert in alert %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{alert}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    {% endfor %}
       {% block content %}   {% endblock content %}
   </div>
     <!-- /Navbar -->

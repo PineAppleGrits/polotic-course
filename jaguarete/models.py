@@ -15,7 +15,8 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=30)
     image = models.ImageField(upload_to="products")
-    description = models.CharField(max_length=300)
+    brief_description = models.CharField(max_length=100,default='')
+    long_description = models.CharField(max_length=1000, default='')
     price = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     def __str__(self):
@@ -29,7 +30,7 @@ class Product(models.Model):
 
 class Cart(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    products_list = models.ManyToManyField(Product, blank=True)
+    products_list = models.ManyToManyField(Product, blank=True, default=[])
 
     def __str__(self):
         return "Carrito de " + self.user.username  

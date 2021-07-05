@@ -1,9 +1,9 @@
 {%extends 'jaguarete/base.html' %}
-
+{% load app_extras %}
 {% block content %}
 
 <h2 class="">Ultimos productos</h2>
-  <div class="row justify-content-center mx-auto"> 
+  <div class="row justify-content-center me-5 ms-5"> 
   {% for item in last_three %}
   <div class="col-sm-3 card mx-auto mt-5">
 
@@ -14,12 +14,68 @@
       </a>
     </div>
   
-    <div class="card-body">
+    <div class="card-body row">
       <h5 class="card-title">{{ item.title }}</h5>
-      <p class="card-text"> {{item.description}}
+      <p class="card-text"> {{item.brief_description}}
       </p>
-  
-      <button type="button" class="btn btn-primary">Ver producto</button>
+      <div class="d-flex flex-column mt-4"><button onclick="window.location.href='/product/{{item.id}}'" class="btn btn-primary btn-sm" type="button">Ver producto</button>
+        {% if request.user|has_not_group:"Moderador" %}
+         <form method="POST" action="/add_to_cart/{{item.id}}">
+        {% csrf_token %}
+        <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
+          {% if user.is_authenticated %}
+        Añadir al carrito
+          {% for item_in_cart in user_cart.products_list.all %}
+            {% if item.title == item_in_cart.title %}
+           <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
+          Ya añadido al carrito
+            <span class="visually-hidden">unread messages</span>
+            </span>
+            {% endif %}
+            {% endfor %}
+          {% else %}
+          
+          {% endif %}
+        </button>
+        </form>
+        {% else %}
+          {% comment %} MODERADOR {% endcomment %}
+  <!-- Button trigger modal -->
+        <button class="btn btn-outline-danger position-relative btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{item.id}}">
+        Eliminar producto
+        </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<form method="POST" action="{% url 'jaguarete:del_product' product=item.id %}">
+{% csrf_token %}
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+<p>Confirmar eliminar el elemento        <b>{{item.title}}</b></p>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+<button type="submit" class="btn btn-primary">Eliminar</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+
+
+        </form>
+       {% endif %}
+        </div>
+              
+                    <!-- Button trigger modal -->
+
     </div>
   </div>
   {% endfor %}
@@ -33,16 +89,19 @@
                 <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="/media/{{item.image}}"></div>
                 <div class="col-md-6 mt-1">
                     <h5>{{item.title}}</h5>
-                    <p class="text-justify text-truncate para mb-0">{{item.description}}<br><br></p>
+                    <p class="text-justify text-truncate para mb-0">{{item.brief_description}}<br><br></p>
                 </div>
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1">
                     <div class="d-flex flex-row align-items-center">
                         <h4 class="mr-1">${{item.price}}</h4>
                     </div>
-                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Ver producto</button>
-                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="button">
-                    Añadir al carrito
+                    <div class="d-flex flex-column mt-4"><button onclick="window.location.href='/product/{{item.id}}'" class="btn btn-primary btn-sm" type="button">Ver producto</button>
+                    {% if request.user|has_not_group:"Moderador" %}
+                     <form method="POST" action="/add_to_cart/{{item.id}}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
                       {% if user.is_authenticated %}
+                    Añadir al carrito
                       {% for item_in_cart in user_cart.products_list.all %}
                         {% if item.title == item_in_cart.title %}
                        <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
@@ -54,7 +113,43 @@
                       {% else %}
                       
                       {% endif %}
-                    </button></div>
+                    </button>
+                    </form>
+                    {% else %}
+                      {% comment %} MODERADOR {% endcomment %}
+              <!-- Button trigger modal -->
+                    <button class="btn btn-outline-danger position-relative btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{item.id}}">
+                    Eliminar producto
+                    </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'jaguarete:del_product' product=item.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <p>Confirmar eliminar el elemento        <b>{{item.title}}</b></p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+                    </form>
+                   {% endif %}
+                    </div>
                 </div>
             </div>
             
