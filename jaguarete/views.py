@@ -8,7 +8,7 @@ from .forms import ProductForm
 
 
 def index(request):
-    
+    page_title = "Inicio"
     last_three = Product.objects.all().order_by('-id')[:3]
     all_items = Product.objects.all().order_by('-id')[3:]
     all_categories = Category.objects.all()
@@ -25,28 +25,39 @@ def index(request):
         'last_three': last_three,
         'all_items': all_items,
         'all_categories': all_categories,
-        'user_cart': user_cart
+        'user_cart': user_cart,
+        'page_title': page_title
     }
     return render(request,'jaguarete/index.html', context)
 
 def categoria(request, categoria):
-    all_items =  Product.objects.filter(category=categoria)
     category = get_object_or_404(Category, id=categoria)
+    page_title = f"Categoria {category}"
+    all_items =  Product.objects.filter(category=categoria)
     all_categories = Category.objects.all()
+    if request.user.is_authenticated:
+        user_cart = Cart.objects.get(user=request.user)
     context = {
         'all_categories': all_categories,
         'category': category,
-        'all_items': all_items 
+        'all_items': all_items,
+        'user_cart': user_cart,
+        'page_title': page_title
     }
     return render(request,'jaguarete/category.html', context)
 
 def search(request):
+    page_title = "Resultados de busqueda"
     query = request.GET.get('q')
     all_items =  Product.objects.filter(Q(title__icontains=query) | Q(long_description__icontains=query) | Q(price__icontains=query))
     all_categories = Category.objects.all()
+    if request.user.is_authenticated:
+        user_cart = Cart.objects.get(user=request.user)
     context = {
         'all_categories': all_categories,
-        'all_items': all_items 
+        'all_items': all_items,
+        'user_cart': user_cart,
+        'page_title': page_title,
     }
     
     return render(request,'jaguarete/search.html', context)
@@ -56,6 +67,7 @@ def product(request, product):
     if has:
         return edit_product(request, product);
     product = get_object_or_404(Product, id=product)
+    page_title = product
     all_categories = Category.objects.all()
     user_cart = None
     if request.user.is_authenticated:
@@ -63,7 +75,8 @@ def product(request, product):
     context = {
         'product': product,
         'all_categories': all_categories,
-        'user_cart': user_cart
+        'user_cart': user_cart,
+        'page_title': page_title
     }
     return render(request,'jaguarete/product.html', context)
 
@@ -80,6 +93,7 @@ def add_to_cart(request, product):
 
 @permission_required('jaguarete.add_product')
 def add_product(request):
+    page_title=f"Añadiendo producto"
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -88,7 +102,7 @@ def add_product(request):
             return redirect('/')
     else:
         form = ProductForm()
-    return render(request, 'jaguarete/add_product.html',  {'form': form})
+    return render(request, 'jaguarete/add_product.html',  {'form': form, 'page_title': page_title})
 
 @login_required
 def cart_list(request):  
@@ -107,8 +121,6 @@ def cart_list(request):
 
 @login_required
 def del_cart_item(request, product):
-    if not request.user.is_authenticated:
-        return redirect('/')
     if request.method == 'POST':
         cart = Cart.objects.get(user=request.user)
         productobj= get_object_or_404(Product, id=product)
@@ -124,10 +136,34 @@ def del_product(request, product):
 @permission_required('jaguarete.change_product')
 def edit_product(request, product):
     instance = get_object_or_404(Product, id=product)
+    page_title = f"Edicion de producto {instance}"
     form = ProductForm(request.POST or None, request.FILES or None, instance=instance)
     if request.method == 'POST':
         if form.is_valid():
             print('Valid')
             form.save()
             return redirect('/')
-    return render(request, 'jaguarete/edit_product.html',  {'form': form, 'product': instance})
+    return render(request, 'jaguarete/edit_product.html',  {'form': form, 'product': instance, 'page_title': page_title})
+
+
+@login_required
+def clear_cart(request):
+    if request.method == 'POST':
+        user_cart = Cart.objects.get(user=request.user)
+        user_cart.products_list.clear()
+    return redirect('/')
+
+
+def about(request):
+    page_title = "Acerca de"
+    all_categories = Category.objects.all()
+    user_cart = None
+    if request.user.is_authenticated:
+        user_cart = Cart.objects.get(user=request.user)
+    context = {
+        'page_title': page_title,
+        'all_categories': all_categories,
+        'user_cart': user_cart
+
+    }
+    return render(request, 'jaguarete/about.html', context)

@@ -7,7 +7,8 @@
 <form action="" method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 <div class="container-fluid justify-content-center mb-5"  style="max-width: 70vw; max-height: 50vh;">
-    <div class="card border-dark mt-5 mb-5 mx-auto"">
+  <h3 class="mt-2 mb-2">{{page_title}}</h3>  
+  <div class="card border-dark mt-2 mb-5 mx-auto"">
         <div class="row g-0">
           <div class="col-md-4 p-2 rounded-start" style="background-color: #E1E5EA;">
             <img src="/media/{{product.image}}" class="img-fluid rounded-start" alt="...">
@@ -34,7 +35,19 @@
                       <label for="price">Precio $</label>
                     {{form.price}}
                     </div>
-                  <button class="col-6 btn btn-lg btn-block btn-outline-primary">Añadir al carrito</button>
+                  <div class="col-6">
+                    <div class="row d-flex">
+                      <button type="submit" class="my-2 btn btn-block btn-outline-primary">Edit item</button>
+                    </form>
+                      <form method="POST" action="{% url 'jaguarete:del_product' product=product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="my-2 btn btn-block btn-outline-danger">Eliminar item</button>
+                        </form>
+  
+  
+  
+                    </div>
+                  </div>
               </div>
             </div>
         </div>
@@ -42,5 +55,4 @@
       </div>
 </div>
 
-</form>
 {% endblock %}

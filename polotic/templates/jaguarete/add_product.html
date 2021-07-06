@@ -7,7 +7,8 @@
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 <div class="container-fluid justify-content-center"  style="max-width: 70vw; max-height: 50vh;">
-    <div class="card border-dark mt-5 mb-5 mx-auto"">
+  <h3 class="mt-2 mb-2">{{page_title}}</h3>  
+  <div class="card border-dark mt-2 mb-5 mx-auto"">
         <div class="row g-0">
           <div class="col-md-4 p-2 rounded-start" style="background-color: #E1E5EA;">
             <img src="/media/{{product.image}}" class="img-fluid rounded-start" alt="...">

@@ -18,9 +18,10 @@
       <h5 class="card-title">{{ item.title }}</h5>
       <p class="card-text"> {{item.brief_description}}
       </p>
-      <div class="d-flex flex-column mt-4"><button onclick="window.location.href='/product/{{item.id}}'" class="btn btn-primary btn-sm" type="button">Ver producto</button>
+      <h5>$ {{item.price}}</h5>
+      <div class="d-flex flex-column mt-4"><a href="{% url 'jaguarete:product' product=item.id %}" class="btn btn-primary btn-sm" >Ver producto</a>
         {% if request.user|has_not_group:"Moderador" %}
-         <form method="POST" action="/add_to_cart/{{item.id}}">
+         <form method="POST" action="{% url 'jaguarete:add_to_cart' product=item.id %}">
         {% csrf_token %}
         <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
             Añadir al carrito
@@ -94,9 +95,9 @@
                     <div class="d-flex flex-row align-items-center">
                         <h4 class="mr-1">${{item.price}}</h4>
                     </div>
-                    <div class="d-flex flex-column mt-4"><button onclick="window.location.href='/product/{{item.id}}'" class="btn btn-primary btn-sm" type="button">Ver producto</button>
+                    <div class="d-flex flex-column mt-4"><a href="{% url 'jaguarete:product' product=item.id%}" class="btn btn-primary btn-sm">Ver producto</a>
                     {% if request.user|has_not_group:"Moderador" %}
-                     <form method="POST" action="/add_to_cart/{{item.id}}">
+                     <form method="POST" action="{% url 'jaguarete:add_to_cart' product=item.id %}">
                     {% csrf_token %}
                     <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
                         Añadir al carrito
@@ -153,12 +154,8 @@
             </div>
             
             {% endfor %}
-            //
+            
         </div>
     </div>
 </div>
-
-{% for cart in all_carts %}
-{{cart.total_price}}
-{% endfor %}
 {% endblock %}
