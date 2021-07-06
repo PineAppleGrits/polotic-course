@@ -89,9 +89,35 @@ var {
     </tr>
 
     {% endfor %}
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+    <tr>
+        <td>
+    <figure class="media">
+        <figcaption class="media-body">
+            <h3 class="title text-truncate">Total</h3>
+        </figcaption>
+    </figure> 
+        </td>
+        <td> 
+            <div class="price-wrap"> 
+                <var class="price">$ {{user_cart.total_price}}</var> 
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td>
+            <button class="btn btn-outline-success">
+                Checkout
+            </button>
+        </td>
+    </tr>
     {% else %}
+    <tr>
+        <h3 class="text-center text-danger">Tu carrito está vacio!</h3>
+    </tr>
 </tbody>
-<h3 class="text-center text-danger">Tu carrito está vacio!</h3>
 {% endif %}
 </table>
     </div> <!-- card.// -->

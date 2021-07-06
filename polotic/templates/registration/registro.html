@@ -1,20 +1,32 @@
 {% extends 'registration/layout.html' %}
 {% block content %}
-<h2>Formulario de registro</h2>
-<form method="post">
-    {%csrf_token%}
-    {%for campo in form%}
-    <p>
-        {{campo.label_tag}}<br>
-        {{campo}}
-        {%if campo.help_text%}
-        <small style="color: grey">{{campo.help_text</small>
-        {%endif%}
-        {%for error in campo.errors%}
-        <p style="color: red"> {{error}}</p>
-        {%endfor%}
-    </p>
-    {%endfor%}
-    <button type="submit">Confirmar registro</button>
-</form>
+
+<div class="row h-100">
+    <div class="col-sm-12 my-auto mx-auto card text-center border border-dark shadow-2 ">
+            <div class="card-header">
+                <h2>Formulario de registro</h2>
+            </div>
+            <div class="card-body text-center">
+                <form method="post">
+                    {%csrf_token%}
+                    {%for campo in form%}
+                    <p>
+                       <div class="form-control"> {{campo.label_tag}}
+                        
+                        {{campo}}</div>
+                        {%if campo.help_text%}
+                        <small style="color: grey">{{campo.help_text}}</small>
+                        {%endif%}
+                        {%for error in campo.errors%}
+                        <p style="color: red"> {{error}}</p>
+                        {%endfor%}
+                    </p>
+                    {%endfor%}
+                    <button class="btn btn-primary"type="submit">Confirmar registro</button>
+                </form>
+            </div>
+              
+  
+    </div>
+</div>
 {% endblock %}

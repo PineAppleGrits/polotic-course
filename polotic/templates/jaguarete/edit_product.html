@@ -5,8 +5,8 @@
 
 {% block content %}
 <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-<div class="container-fluid justify-content-center"  style="max-width: 70vw; max-height: 50vh;">
+{% csrf_token %}
+<div class="container-fluid justify-content-center mb-5"  style="max-width: 70vw; max-height: 50vh;">
     <div class="card border-dark mt-5 mb-5 mx-auto"">
         <div class="row g-0">
           <div class="col-md-4 p-2 rounded-start" style="background-color: #E1E5EA;">
@@ -34,12 +34,13 @@
                       <label for="price">Precio $</label>
                     {{form.price}}
                     </div>
-                  <button type="submit" class="col-6 btn btn-lg btn-block btn-outline-primary">Añadir al carrito</button>
+                  <button class="col-6 btn btn-lg btn-block btn-outline-primary">Añadir al carrito</button>
               </div>
             </div>
         </div>
         </div>
       </div>
 </div>
+
 </form>
 {% endblock %}

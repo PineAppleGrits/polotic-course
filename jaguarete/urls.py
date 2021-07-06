@@ -13,5 +13,6 @@ urlpatterns = [
     path('del_cart_item/<str:product>', views.del_cart_item, name='del_cart_item'),
     path('add_product/', views.add_product, name='add_product'),
     path('carrito/', views.cart_list, name='cart_list'),
-    path('del_product/<str:product>', views.del_product, name='del_product')
+    path('del_product/<str:product>', views.del_product, name='del_product'),
+    path('edit_product/<str:product>', views.edit_product, name='edit_product')
 ]

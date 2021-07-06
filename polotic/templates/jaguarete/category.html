@@ -1,12 +1,12 @@
 {%extends 'jaguarete/base.html' %}
-
+{% load app_extras %}
 {% block content %}
   <h2>Productos en {{category.title}}</h2>
   <div class="container mt-5 mb-5">
     <div class="d-flex row">
         <div class="col-md-10">
             {% for item in all_items %}
-                        <div class="row p-2 bg-white border rounded">
+                                      <div class="row p-2 bg-white border rounded">
                 <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="/media/{{item.image}}"></div>
                 <div class="col-md-6 mt-1">
                     <h5>{{item.title}}</h5>
@@ -16,19 +16,66 @@
                     <div class="d-flex flex-row align-items-center">
                         <h4 class="mr-1">${{item.price}}</h4>
                     </div>
-                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Ver producto</button>
-                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="button" disabled>
-                    Añadir al carrito
-                      <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
-    Ya añadido al carrito
+                    <div class="d-flex flex-column mt-4"><button onclick="window.location.href='/product/{{item.id}}'" class="btn btn-primary btn-sm" type="button">Ver producto</button>
+                    {% if request.user|has_not_group:"Moderador" %}
+                     <form method="POST" action="/add_to_cart/{{item.id}}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
+                        Añadir al carrito
+                      {% if user.is_authenticated %}
+                      {% for item_in_cart in user_cart.products_list.all %}
+                        {% if item.title == item_in_cart.title %}
+                       <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
+                      Ya añadido al carrito
+                        <span class="visually-hidden">unread messages</span>
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                      {% else %}
+                      
+                      {% endif %}
+                    </button>
+                    </form>
+                    {% else %}
+                      {% comment %} MODERADOR {% endcomment %}
+              <!-- Button trigger modal -->
+                    <button class="btn btn-outline-danger position-relative btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{item.id}}">
+                    Eliminar producto
+                    </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'jaguarete:del_product' product=item.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <p>Confirmar eliminar el elemento        <b>{{item.title}}</b></p>
 
-  </span>
-                    </button></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+                    </form>
+                   {% endif %}
+                    </div>
                 </div>
             </div>
             
             {% endfor %}
-
+        
         </div>
     </div>
 </div>

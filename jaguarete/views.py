@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import redirect, get_list_or_404, get_object_or_404, render
 from django.contrib.auth.decorators import permission_required, login_required
-from .forms import ProductForm, NameForm
+from .forms import ProductForm
 # Create your views here.
 
 
@@ -52,6 +52,9 @@ def search(request):
     return render(request,'jaguarete/search.html', context)
 
 def product(request, product):
+    has = request.user.groups.filter(name="Moderador").exists()
+    if has:
+        return edit_product(request, product);
     product = get_object_or_404(Product, id=product)
     all_categories = Category.objects.all()
     user_cart = None
@@ -115,6 +118,16 @@ def del_cart_item(request, product):
 @permission_required('jaguarete.delete_product')
 def del_product(request, product):
     if request.method == 'POST':
-        #productobj = get_object_or_404(Product, id=product)
         Product.objects.get(id=product).delete()
     return redirect('/')
+
+@permission_required('jaguarete.change_product')
+def edit_product(request, product):
+    instance = get_object_or_404(Product, id=product)
+    form = ProductForm(request.POST or None, request.FILES or None, instance=instance)
+    if request.method == 'POST':
+        if form.is_valid():
+            print('Valid')
+            form.save()
+            return redirect('/')
+    return render(request, 'jaguarete/edit_product.html',  {'form': form, 'product': instance})

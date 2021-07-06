@@ -100,7 +100,7 @@
                 </li>
               </ul>
               {% if request.user|has_group:"Moderador" %}
-              <a  class="mx-2 btn btn-outline-success " href="#">+ Añadir producto</a>
+              <a  class="mx-2 btn btn-outline-success " href="{% url 'jaguarete:add_product'%}">+ Añadir producto</a>
               {% endif %}
               <form action="{% url 'jaguarete:search' %}" class="d-flex">
                 <input
@@ -136,16 +136,15 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-    <footer class="sticky-footer-wrapper footer py-3 bg-light ">
-              <!-- Copyright -->
+    <footer class="mt-auto py-3 bg-light ">
       <div class="container text-center p-3">
         © 2021 Copyright:
         <a class="text-dark" href="">JAGUARETE KAA S.A.</a>
         <p class="text-primary">Gino Somigliana</p>
       </div>
-    
     </footer>
     <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="http://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
   </body>
 </html>

@@ -23,13 +23,12 @@
          <form method="POST" action="/add_to_cart/{{item.id}}">
         {% csrf_token %}
         <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
+            Añadir al carrito
           {% if user.is_authenticated %}
-        Añadir al carrito
           {% for item_in_cart in user_cart.products_list.all %}
             {% if item.title == item_in_cart.title %}
            <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
           Ya añadido al carrito
-            <span class="visually-hidden">unread messages</span>
             </span>
             {% endif %}
             {% endfor %}
@@ -100,8 +99,8 @@
                      <form method="POST" action="/add_to_cart/{{item.id}}">
                     {% csrf_token %}
                     <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
+                        Añadir al carrito
                       {% if user.is_authenticated %}
-                    Añadir al carrito
                       {% for item_in_cart in user_cart.products_list.all %}
                         {% if item.title == item_in_cart.title %}
                        <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
