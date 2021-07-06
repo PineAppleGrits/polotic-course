@@ -1,6 +1,6 @@
 **/**/**/password_*
-# Django #
-
+# Static #
+*.css
 # Backup files # 
 *.bak 
 
