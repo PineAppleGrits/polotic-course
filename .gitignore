@@ -10,7 +10,7 @@ media
 *.bak 
 
 # Password reset files#
-password_*
+polotic/templates/registration/password_*
 
 # If you are using PyCharm # 
 .idea/**/workspace.xml 
