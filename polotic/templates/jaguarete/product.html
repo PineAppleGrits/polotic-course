@@ -1,0 +1,32 @@
+
+
+
+{%extends 'jaguarete/base.html' %}
+
+{% block content %}
+ <form method="POST" action="{% url 'jaguarete:add_to_cart' product=product.id %}">
+{% csrf_token %}
+<div class="container-fluid justify-content-center"  style="max-width: 70vw; max-height: 50vh;">
+    <div class="card border-dark mt-5 mb-5 mx-auto"">
+        <div class="row g-0">
+          <div class="col-md-4 p-2 rounded-start" style="background-color: #E1E5EA;">
+            <img src="/media/{{product.image}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8 flex-column">
+            <div class="d-flex h-100 flex-column card-body">
+              <h2 class="card-title">{{product.title}}</h2>
+              
+              <p class="card-text">{{product.long_description}}</p>
+              <h5 class="text-dark">Categoria: {{product.category}}</h5>
+              <div class="row mt-auto p-4">
+
+                  <h2 class="col-6">Precio ${{product.price}}</h2>
+                  <button class="col-6 btn btn-lg btn-block btn-outline-primary">Añadir al carrito</button>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+</div>
+</form>
+{% endblock %}

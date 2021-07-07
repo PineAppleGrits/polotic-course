@@ -1,0 +1,51 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Autenticacion</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+      <link href="http://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/87384367cf.js" crossorigin="anonymous"></script>
+    <!-- Custom css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PineAppleGrits/statics/polotic/django/styles.css">
+  
+  </head>
+  <body>
+
+<style>
+.container-fluid{
+  background: #200122;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+height: 100vh
+}
+.card{
+          /*my additional class name -for card*/
+    margin-left: 18%;      
+    margin-right: 18%;
+    width: auto;
+
+}
+</style>
+          <div class="container-fluid">
+        
+{% block content %}
+{% endblock %}
+         
+          <!-- content-wrapper ends -->
+        <!-- row ends -->
+      </div>
+  
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="http://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+{%extends 'jaguarete/base.html' %}
+
+{% block content %}
+
+<style>
+.param {
+    margin-bottom: 7px;
+    line-height: 1.4;
+}
+.param-inline dt {
+    display: inline-block;
+}
+.param dt {
+    margin: 0;
+    margin-right: 7px;
+    font-weight: 600;
+}
+.param-inline dd {
+    vertical-align: baseline;
+    display: inline-block;
+}
+
+.param dd {
+    margin: 0;
+    vertical-align: baseline;
+} 
+
+.shopping-cart-wrap .price {
+    color: #007bff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 5px;
+    display: block;
+}
+var {
+    font-style: normal;
+}
+
+.media img {
+    margin-right: 1rem;
+}
+.img-sm {
+    width: 90px;
+    max-height: 75px;
+    object-fit: cover;
+}
+</style>
+<div class="container mt-3">
+
+    
+    
+    <div class="card">
+    <table class="table table-hover shopping-cart-wrap">
+    <thead class="text-muted">
+    <tr>
+      <th scope="col">Producto</th>
+      <th scope="col" width="120">Precio</th>
+      <th scope="col" width="200" class="text-right">Accion</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if user_cart.products_list.all %}
+    {% for item in user_cart.products_list.all %}
+    <tr>
+        <td>
+    <figure class="media">
+        <div class="img-wrap"><img src="/media/{{item.image}}" class="img-thumbnail img-sm"></div>
+        <figcaption class="media-body">
+            <h6 class="title text-truncate">{{item.title}}</h6>
+            <dl class="param param-inline small">
+              <dt>Descripcion</dt>
+              <dd>{{item.long_description}}</dd>
+            </dl>
+        </figcaption>
+    </figure> 
+        </td>
+        
+        <td> 
+            <div class="price-wrap"> 
+                <var class="price">$ {{item.price}}</var> 
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td class="text-right"> 
+            <form action="{% url 'jaguarete:del_cart_item' product=item.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger"> × Eliminar del carrito</button>
+            </form>
+        </td>
+    </tr>
+
+    {% endfor %}
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+    <tr>
+        <td>
+    <figure class="media">
+        <figcaption class="media-body">
+            <h3 class="title text-truncate">Total</h3>
+        </figcaption>
+    </figure> 
+        </td>
+        <td> 
+            <div class="price-wrap"> 
+                <var class="price">$ {{user_cart.total_price}}</var> 
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td>
+            <button class="btn btn-outline-success">
+                Checkout
+            </button>
+            <form method="POST" action="{% url 'jaguarete:clear_cart' %}">
+                {%csrf_token%}
+                <button type="submit" class="btn btn-outline-danger">
+                    Vaciar 
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <h3 class="text-center text-danger">Tu carrito está vacio!</h3>
+    </tr>
+</tbody>
+{% endif %}
+</table>
+    </div> <!-- card.// -->
+</div> 
+    
+{% endblock %}

@@ -1,0 +1,31 @@
+
+
+
+{%extends 'jaguarete/base.html' %}
+{% load static%}
+{% block content %}
+<div class="container-fluid justify-content-center"  style="max-width: 70vw; max-height: 50vh;">
+  <h3 class="mt-2 mb-2">{{page_title}}</h3>  
+  <div class="card border-dark mt-2 mb-5 mx-auto"">
+        <div class="row g-0">
+          <div class="col-md-4 p-2 rounded-start" style="background-color: #E1E5EA;">
+            <img src="{% static 'jaguarete/images/logo.png' %}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8 flex-column">
+            <div class="d-flex h-100 flex-column card-body">
+              <h5>Jaguarete</h5>
+              Somos una empresa 100% nacional con más de 30 años de trayectoria en la comercializacion de indumentaria.
+              Hoy sumamos más de 200 empleados, 13 sucursales y a través del e-comerce llegamos a satisfacer las
+               necesades de nuestros clientes en todo el pais.
+            <br>
+               Gracias por confiar en nosotros.
+
+                
+              
+                        
+            </div>
+        </div>
+        </div>
+      </div>
+</div>
+{% endblock %}

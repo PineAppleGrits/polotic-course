@@ -1,0 +1,86 @@
+{%extends 'jaguarete/base.html' %}
+{% load app_extras %}
+{% block content %}
+<h3>Resultados de busqueda</h3>
+{% if all_items %}
+<div class="container mt-5 mb-5">
+    <div class="d-flex row">
+        <div class="col-md-10">
+            {% for item in all_items %}
+                                      <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="/media/{{item.image}}"></div>
+                <div class="col-md-6 mt-1">
+                    <h5>{{item.title}}</h5>
+                    <p class="text-justify text-truncate para mb-0">{{item.brief_description}}<br><br></p>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">${{item.price}}</h4>
+                    </div>
+                    <div class="d-flex flex-column mt-4"><a href="{% url 'jaguarete:product' product=item.id%}" class="btn btn-primary btn-sm">Ver producto</a>
+                    {% if request.user|has_not_group:"Moderador" %}
+                     <form method="POST" action="{% url 'jaguarete:add_to_cart' product=item.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-primary position-relative btn-sm mt-2" type="submit">
+                        Añadir al carrito
+                      {% if user.is_authenticated %}
+                      {% for item_in_cart in user_cart.products_list.all %}
+                        {% if item.title == item_in_cart.title %}
+                       <span class="position-absolute top-0 start-100 translate-middle badge bg-success">
+                      Ya añadido al carrito
+                        <span class="visually-hidden">unread messages</span>
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                      {% else %}
+                      
+                      {% endif %}
+                    </button>
+                    </form>
+                    {% else %}
+                      {% comment %} MODERADOR {% endcomment %}
+              <!-- Button trigger modal -->
+                    <button class="btn btn-outline-danger position-relative btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{item.id}}">
+                    Eliminar producto
+                    </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'jaguarete:del_product' product=item.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <p>Confirmar eliminar el elemento        <b>{{item.title}}</b></p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+                    </form>
+                   {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+{% else %}
+<h4 class="text-center text-danger">No se han encontrado elementos :(</h4>
+{% endif %}
+{% endblock %}
