@@ -1,14 +1,13 @@
 # Django App for Polotic course
 
 ### Autenticacion
-> Admin
-Usuario: admin
-Contraseña: admin
-> Moderador
-Usuario: mod
-Contraseña: moderator
-> Usuario comun
- Usar formulario de registro ('/registrarse')
+| Usuario | Contraseña                                    |
+|---------|-----------------------------------------------|
+| admin   | admin                                         |
+| mod     | moderator                                     |
+| usuario | (Usar formulario de registro en /registrarse) |
+
+
 
 ## Objective
 
