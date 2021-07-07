@@ -2,18 +2,18 @@
 
 ## To-do: 
 
-- [ ] Navbar
-	- [ ] Logo
-	- [ ] Buttons login, register, cart
-	- [ ] Section:
-		- [ ] Home 
-		- [ ] Dropdown: Available categories of products
-		- [ ] About.. Button (Data of the mark)
-		- [ ] Contact button
-		- [ ] Add product Button (only mods)
-		- [ ] Search Box 
-- [ ] Footer: 
-	- [ ] Name, Copyright, dev's name
+- [x] Navbar
+	- [x] Logo
+	- [x] Buttons login, register, cart
+	- [x] Section:
+		- [x] Home 
+		- [x] Dropdown: Available categories of products
+		- [x] About.. Button (Data of the mark)
+		- [x] Contact button
+		- [x] Add product Button (only mods)
+		- [x] Search Box 
+- [x] Footer: 
+	- [x] Name, Copyright, dev's name
 
 `On page changes only the body changes, Navbar and Footer stays.`
 
