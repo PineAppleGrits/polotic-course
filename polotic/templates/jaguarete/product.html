@@ -4,6 +4,8 @@
 {%extends 'jaguarete/base.html' %}
 
 {% block content %}
+ <form method="POST" action="{% url 'jaguarete:add_to_cart' product=product.id %}">
+{% csrf_token %}
 <div class="container-fluid justify-content-center"  style="max-width: 70vw; max-height: 50vh;">
     <div class="card border-dark mt-5 mb-5 mx-auto"">
         <div class="row g-0">
@@ -26,4 +28,5 @@
         </div>
       </div>
 </div>
+</form>
 {% endblock %}
